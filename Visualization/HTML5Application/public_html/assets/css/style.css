@@ -1,0 +1,47 @@
+html, body, #map-canvas {
+	height: 100%;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	margin-left: auto;
+	margin-right: auto;
+
+	background-color:rgb(245, 245, 245);
+}
+
+html {
+	font-family: Serif;
+}
+
+form#PredictionForm {
+	/*width: 300px;*/
+	/*margin: 0 auto 3em auto;*/
+}
+
+form#PredictionForm div {
+	margin: inherit;
+}
+
+.form-group2 {
+	padding: 5%;
+}
+
+.form-group,.control-group {
+	width:100%; 
+	padding: 2% 3%;
+	/*padding:5%;*/
+	/*text-align:center;*/
+	/*display: inline-block;*/
+}
+
+select {
+    -moz-appearance: none;
+    text-indent: 0.01px;
+    text-overflow: '>';
+}
+.choice td {
+	width:50%;
+}
+.choice input {
+	width:100%;
+}

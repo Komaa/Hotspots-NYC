@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<html>
+    <head>
+        <title>NYCab Hotspots</title>
+        <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Dependencies -->
+        <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <!-- <link href="bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" media="all" /> -->
+        <link href="bower_components/bootstrap-daterangepicker/daterangepicker-bs2.css" rel="stylesheet" type="text/css" media="all" />
+
+        <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+        <script type="text/javascript" src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
+
+        <!-- Own Stuff -->
+        <script type="text/javascript" src="assets/js/mapScript.js"></script>
+        <script type="text/javascript" src="assets/js/predict.js"></script>
+        <link href="assets/css/style.css" rel="stylesheet" />
+
+            <script type="text/javascript">
+    
+            </script>
+            
+    </head>
+    <body>
+
+
+    <table style="width:100%">
+    <tr>
+    <td id="map" style="width: 80%; height: 100%; position: absolute;">
+        <div id="map-canvas"></div>
+    </td>
+
+    <td id="menu" style="width: 20%; height: 100%;">
+
+        <div class="well" style="border:none">
+            <h1 style="text-align:center; padding-right:2%">Hotspot Detection</h1>
+
+            <form id="PredictionForm" name="predForm" class="form-horizontal" action="#">
+
+            <table>
+
+            <tr><td colspan="2">
+                    <div class="form-group">
+                    <form action="radio.html" style="width:100%">
+                        <!-- <p>choose</p> -->
+                        <fieldset>
+
+                            <input type="radio" id="data_visualization" name="style" value="data visualization" onclick="dataVisualisation()">
+                            <label for="data_visualization">Data Visualization</label><br>
+                            <input type="radio" id="prediction" name="style" value="prediction" onclick="activatePrediction()">
+
+                            <label for="prediction">Prediction</label>
+                        </fieldset>
+                    </form>
+                    </div>
+            </td></tr>
+
+            <tr><td colspan="2">
+                  <!--   <hr> -->
+                    <div class="control-group">
+                        <div class="controls">
+                            <div class="input-prepend input-group">
+                                <span style="width:100%" class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                                <input type="text" style="width: 200px" name="birthday" id="birthday" class="form-control" value="01/01/2013" />
+                            </div>
+                        </div>
+                    </div>
+            </td></tr>
+
+            <tr><td colspan="2">
+            <div class="form-group">
+                <input  for="amount" oninput="globalHour = rangeInput.value; changeHotSpots()" id="slider" type="range" min="0" max="23" step="1" name="rangeInput" />
+            </div>
+            </td></tr>
+
+            <tr class="choice"><td>
+                <div class="form-group2">
+
+                <input id="startBtn" class="btn btn-primary" onclick="toggleStartDest(this)" value="Pick Up"/>
+                </div>
+            </td><td>
+                <div class="form-group2">
+                <input id="destinationBtn" class="btn" onclick="toggleStartDest(this)" value="Drop Off"/>
+
+                </div>
+            </td></tr>
+
+            <tr><td>
+                <div class="form-group2">
+                    <label for="latitude">Latitude</label>
+                    <input id="latitude" class="form-control" type="text" name="lat" placeholder="latitude" value="40.75801568">
+                </div>
+                </td><td>
+                <div class="form-group2">
+                    <label for="longitude">Longitude</label>
+                    <input id="longitude" class="form-control" type="text" name="lon" placeholder="longitude" value="-73.96841004">
+                </div>
+            </td></tr>
+
+            <tr><td>
+                <div class="form-group2">
+                    <label for="DropDownListWeather">Weather</label>
+                    <select id="DropDownListWeather" class="form-control" name="weather" value="weather"></select>
+                </div>
+                </td><td>
+                <div class="form-group2">
+                    <label for="DropDownListTime">Time</label>
+                    <select id="DropDownListTime" class="form-control" name="time" value="Clear"></select>
+                </div>
+            </td></tr>
+
+            <tr><td>
+                <div class="form-group2">
+                    <label for="isholiday">Public Holiday</label>
+                    <select id="isholiday" class="form-control" name="isholiday">
+                        <option value="true">YES</option>
+                        <option value="false">NO</option>
+                    </select>
+                </div>
+            </td><td>
+                <div class="form-group2" >
+                    <label for="temp">Temperature</label>
+                    <input id="temp" name="mean_temp" class="form-control" type="number" value="4.4" size="3">
+                </div>
+            </td></tr>
+
+            <tr><td>
+                <div class="form-group2">
+                    <label for="fb_events">FB Events</label>
+                    <input id="fb_events" name="events" class="form-control" type="number" step="1" value="0" size="3">
+                </div>
+             </td><td>
+                <div class="form-group2">
+                    <label for="fb_people">FB Attendees</label>
+                    <input id="fb_people" name="attendees" class="form-control" type="number" step="1" value="0" size="3">
+                </div>
+            </td></tr>
+
+            <tr>
+            <td colspan="2" style="padding:3%;padding-left:27%; padding-top:8%">
+
+                <input id="submitBtn" type="submit" onclick="predict()" style="width:60%" class="btn btn-primary" value="Prediction"/>
+            </td>
+            </tr>
+
+            </form>
+            </table>
+        </div>
+    </td>
+
+    </tr></table>
+
+</body>
+</html>
